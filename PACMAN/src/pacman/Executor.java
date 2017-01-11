@@ -146,12 +146,17 @@ public class Executor {
 
 	private String calculatePossibleGrade() {
 		double grade = 0;
-		int baselineScore = 3300;
-		if (avgScore < baselineScore) {
+		int minScore = 3000;
+		int baselineScore = 10000;
+		if (avgScore < minScore) {
+			return String.valueOf(grade);
+		} else if (avgScore < baselineScore) {
+			grade = 40 + ((avgScore - minScore) / 7000) * 20;
 			return String.valueOf(grade);
 		} else {
-			grade = ((avgScore - baselineScore) / avgScore) * 60;
+			grade = 60 + ((avgScore - baselineScore) / avgScore) * 40;
 		}
+
 		return String.valueOf(grade);
 	}
 
