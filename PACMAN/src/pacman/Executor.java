@@ -22,7 +22,6 @@ import java.util.Random;
 import pacman.controllers.Controller;
 import pacman.controllers.HumanController;
 import pacman.controllers.examples.Legacy;
-import pacman.controllers.examples.StarterPacMan;
 import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
@@ -38,6 +37,7 @@ import pacman.game.GameView;
 @SuppressWarnings("unused")
 public class Executor {
 
+	private double totalScore;
 	private double avgScore;
 
 	/**
@@ -111,7 +111,7 @@ public class Executor {
 	 */
 	public void runExperiment(Controller<MOVE> pacManController, Controller<EnumMap<GHOST, MOVE>> ghostController,
 			int trials) {
-		avgScore = 0;
+		totalScore = 0;
 
 		Random rnd = new Random(0);
 		Game game;
@@ -125,20 +125,21 @@ public class Executor {
 						ghostController.getMove(game.copy(), System.currentTimeMillis() + DELAY));
 			}
 
-			avgScore += game.getScore();
+			totalScore += game.getScore();
 			high = Math.max(high, game.getScore());
 			System.out.println(i + "\t" + game.getScore());
 		}
 		FileWriter results = null;
+		avgScore = totalScore / trials;
 		try {
 			results = new FileWriter(new File("results.txt"), true);
-			results.write(pacManController.getClass().getSimpleName() + "," + high + "," + (avgScore / trials));
+			results.write(pacManController.getClass().getSimpleName() + "," + high + "," + (avgScore));
 			results.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(pacManController.getClass().getSimpleName() + " " + high + " " + (avgScore / trials));
+		System.out.println(pacManController.getClass().getSimpleName() + " " + high + " " + (avgScore));
 		System.out.println(
 				"Calculating potential grade - Disclaimer: This is not the final grade and may be effected by machine performance");
 		System.out.println("\nGrade: " + calculatePossibleGrade());
@@ -151,12 +152,10 @@ public class Executor {
 		if (avgScore < minScore) {
 			return String.valueOf(grade);
 		} else if (avgScore < baselineScore) {
-			grade = 40 + ((avgScore - minScore) / 7000) * 20;
+			grade = 40 + ((avgScore - minScore) / (baselineScore - minScore)) * 30;
 			return String.valueOf(grade);
-		} else {
-			grade = 60 + ((avgScore - baselineScore) / avgScore) * 40;
 		}
-
+		grade = 70 + ((avgScore - baselineScore) / avgScore) * 30;
 		return String.valueOf(grade);
 	}
 

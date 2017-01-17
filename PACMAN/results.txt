@@ -99,4 +99,4 @@ UmarAkhtarPacMan,28560,9759.6,
 VassilKalphovPacman,110910,72035.8,
 YordanStoykovPacman,11420,4974.3,
 ZhengQinPacman,46280,18498.1,
-ZonashBaigPacman,64710,23842.6,RandomPacMan,910,202.4
+ZonashBaigPacman,64710,23842.6,RandomPacMan,910,202.4RandomPacMan,900,185.6RandomPacMan,530,197.2RandomPacMan,1000,197.2RandomPacMan,1030,218.1RandomPacMan,1060,206.0RandomPacMan,1060,197.8RandomPacMan,1740,195.2RandomPacMan,980,218.9StarterPacMan,6040,3212.7RandomPacMan,910,206.0StarterPacMan,5990,3424.0
